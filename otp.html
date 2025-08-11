@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Send OTP</title>
+    <title>Send OTP</title>
 </head>
 <body>
-  <h2>Send OTP Page</h2>
-  <button onclick="sendOTP()">Send OTP</button>
-  <p id="otpMessage"></p>
+    <h2>Send OTP Page</h2>
+    <button onclick="sendOTP()">Send OTP</button>
+    <p id="otpMessage"></p>
 
-  <script>
-    function sendOTP() {
-      // Generate a random 6-digit OTP
-      const otp = Math.floor(100000 + Math.random() * 900000);
-      sessionStorage.setItem('otp', otp); // Store OTP in browser storage for demo
-      document.getElementById("otpMessage").innerText =
-        `OTP Sent: ${otp} (In real app, this would be via SMS/Email)`;
-    }
-  </script>
+    <script>
+        function sendOTP() {
+            // Generate a random 6-digit OTP
+            const otp = Math.floor(100000 + Math.random() * 900000);
+            localStorage.setItem('otp', otp); // Store OTP in localStorage
+            document.getElementById("otpMessage").innerText =
+                `OTP Sent: ${otp} (In real app, this would be via SMS/Email)`;
+        }
+    </script>
 </body>
 </html>
-
