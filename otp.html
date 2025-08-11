@@ -2,20 +2,75 @@
 <html>
 <head>
     <title>Send OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #0f4c75;
+        }
+        button {
+            background-color: #3282b8;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #0f4c75;
+        }
+        #otpMessage {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #0f4c75;
+            font-weight: bold;
+        }
+        .bank-logo {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Send OTP Page</h2>
-    <button onclick="sendOTP()">Send OTP</button>
-    <p id="otpMessage"></p>
+    <div class="container">
+        <img class="bank-logo" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Bank Logo">
+        <h2>Secure OTP Service</h2>
+        <p>Please click the button below to receive your One-Time Password.</p>
+        <button onclick="sendOTP()">Send OTP</button>
+        <p id="otpMessage"></p>
+    </div>
 
     <script>
         function sendOTP() {
-            // Generate a random 6-digit OTP
             const otp = Math.floor(100000 + Math.random() * 900000);
-            localStorage.setItem('otp', otp); // Store OTP in localStorage
+            localStorage.setItem('otp', otp);
             document.getElementById("otpMessage").innerText =
-                `OTP Sent: ${otp} (In real app, this would be via SMS/Email)`;
+                `✅ OTP Sent: ${otp} (For demo purposes only)`;
         }
     </script>
 </body>
 </html>
+
+
