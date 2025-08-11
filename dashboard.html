@@ -1,23 +1,105 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <title>MFA Demo — Dashboard</title>
-  <style>body{font-family:Arial;padding:24px;max-width:700px;margin:auto}</style>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
+      color: #fff;
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: #ffffff;
+      color: #222;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      padding: 40px 50px;
+      text-align: center;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 2.75rem;
+      margin-bottom: 20px;
+      color: #0A2540;
+      letter-spacing: 1px;
+    }
+    #content {
+      font-size: 1.25rem;
+      margin: 30px 0 50px;
+      min-height: 100px;
+    }
+    /* Success message */
+    #content.success {
+      color: #2E7D32; /* dark green */
+      font-weight: 600;
+    }
+    /* Error message */
+    #content.error {
+      color: #C62828; /* dark red */
+      font-weight: 600;
+    }
+    a {
+      text-decoration: none;
+      color: #0052D4;
+      font-weight: 600;
+      margin: 0 12px;
+      padding: 8px 18px;
+      border-radius: 6px;
+      background: #E3F2FD;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,82,212,0.3);
+      display: inline-block;
+    }
+    a:hover, a:focus {
+      background: #0052D4;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(0,82,212,0.5);
+    }
+    /* Checkmark style */
+    .checkmark {
+      display: inline-block;
+      font-size: 3rem;
+      color: #2E7D32;
+      margin-right: 12px;
+      vertical-align: middle;
+      user-select: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>Dashboard</h1>
-  <div id="content"></div>
-  <p><a href="index.html">Back to Send OTP</a> | <a href="login.html">Login Page</a></p>
+  <div class="container">
+    <h1>Dashboard</h1>
+    <div id="content"></div>
+    <p>
+      <a href="index.html" aria-label="Back to Send OTP">Back to Send OTP</a> |
+      <a href="login.html" aria-label="Go to Login Page">Login Page</a>
+    </p>
+  </div>
 
   <script>
+    const content = document.getElementById('content');
     const ok = sessionStorage.getItem('mfa_logged_in_demo') === 'true';
     if (!ok) {
-      document.getElementById('content').innerHTML = '<strong>Access denied.</strong> You must login via OTP.';
+      content.classList.add('error');
+      content.innerHTML = '<strong>Access denied.</strong> You must login via OTP.';
     } else {
-      // option: remove the flag so refresh won't remain logged in
+      // Remove flag so page refresh logs out
       sessionStorage.removeItem('mfa_logged_in_demo');
-      document.getElementById('content').innerHTML = '<p>✅ You have successfully logged in (demo).</p>';
+      content.classList.add('success');
+      content.innerHTML = '<span class="checkmark">✔️</span> You have successfully logged in (demo).';
     }
   </script>
 </body>
