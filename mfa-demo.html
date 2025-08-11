@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MFA Testing Demo</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    .container { max-width: 400px; margin: auto; }
+    input, button { width: 100%; padding: 8px; margin: 5px 0; }
+    .inbox { border: 1px solid #ccc; padding: 10px; margin-top: 20px; height: 150px; overflow-y: auto; }
+    .message { color: red; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>MFA Testing Demo</h2>
+    <div id="login-stage">
+      <input type="text" id="email" placeholder="Email (demo: user@example.com)" value="user@example.com" />
+      <input type="password" id="password" placeholder="Password (demo: pass123)" value="pass123" />
+      <button id="login-btn">Login</button>
+      <div class="message" id="login-msg"></div>
+    </div>
+
+    <div id="mfa-stage" style="display:none;">
+      <p>Select MFA method:</p>
+      <button id="sms-btn">Send SMS OTP</button>
+      <button id="email-btn">Send Email OTP</button>
+      <div class="message" id="mfa-msg"></div>
+    </div>
+
+    <div id="verify-stage" style="display:none;">
+      <input type="text" id="otp-input" placeholder="Enter OTP" />
+      <button id="verify-btn">Verify OTP</button>
+      <div class="message" id="verify-msg"></div>
+    </div>
+
+    <div class="inbox" id="inbox">
+      <strong>Simulated Inbox:</strong>
+    </div>
+  </div>
+
+  <script>
+    const DEMO_EMAIL = 'user@example.com';
+    const DEMO_PASS = 'pass123';
+    let currentOtp = '';
+
+    function showStage(id) {
+      ['login-stage','mfa-stage','verify-stage'].forEach(s => {
+        document.getElementById(s).style.display = s === id ? '' : 'none';
+      });
+      document.getElementById('login-msg').textContent = '';
+      document.getElementById('mfa-msg').textContent = '';
+      document.getElementById('verify-msg').textContent = '';
+    }
+
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      const pass  = document.getElementById('password').value;
+      if (email === DEMO_EMAIL && pass === DEMO_PASS) {
+        showStage('mfa-stage');
+      } else {
+        document.getElementById('login-msg').textContent = 'Invalid credentials.';
+      }
+    });
+
+    ['sms-btn','email-btn'].forEach(btnId => {
+      document.getElementById(btnId).addEventListener('click', () => {
+        currentOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        const method = btnId === 'sms-btn' ? 'SMS' : 'Email';
+        const inbox = document.getElementById('inbox');
+        const msg = document.createElement('div');
+        msg.textContent = `${new Date().toLocaleTimeString()} — ${method} OTP: ${currentOtp}`;
+        inbox.append(msg);
+        showStage('verify-stage');
+        document.getElementById('mfa-msg').textContent = `OTP sent via ${method}.`;
+      });
+    });
+
+    document.getElementById('verify-btn').addEventListener('click', () => {
+      const entered = document.getElementById('otp-input').value;
+      if (entered === currentOtp) {
+        document.getElementById('verify-msg').style.color = 'green';
+        document.getElementById('verify-msg').textContent = '✅ MFA verified!';
+      } else {
+        document.getElementById('verify-msg').style.color = 'red';
+        document.getElementById('verify-msg').textContent = 'Invalid OTP, try again.';
+      }
+    });
+  </script>
+</body>
+</html>
