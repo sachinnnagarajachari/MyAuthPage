@@ -1,36 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <title>MFA Demo — Login</title>
+  <meta charset="utf-8" />
+  <title>MFA Demo — Login</title>
+  <style>
+    body { font-family: Arial; padding: 24px; max-width: 500px; margin: auto; }
+    input, button { padding: 10px; margin: 6px 0; width: 100%; }
+    #msg { margin-top: 12px; }
+  </style>
 </head>
 <body>
-    <h1>MFA Demo — Login</h1>
-    <p>Enter the OTP generated on the Send page.</p>
+  <h1>MFA Demo — Login</h1>
+  <p>Enter the OTP generated on the Send page (not actually checked in this demo).</p>
 
-    <label>OTP</label>
-    <input type="text" id="otpInput">
-    <br><br>
-    <button onclick="verifyOTP()">Verify & Login</button>
-    <p id="resultMessage"></p>
+  <label>OTP</label>
+  <input id="otp" placeholder="Enter OTP" />
 
-    <script>
-        function verifyOTP() {
-            const enteredOtp = document.getElementById('otpInput').value.trim();
-            const storedOtp = localStorage.getItem('otp'); // Get OTP from localStorage
+  <button id="verify">Verify & Login</button>
+  <div id="msg"></div>
 
-            if (!storedOtp) {
-                document.getElementById('resultMessage').innerText =
-                    'No OTP found. Please generate OTP from the Send page.';
-                return;
-            }
-
-            if (enteredOtp === storedOtp) {
-                document.getElementById('resultMessage').innerText = 'OTP Verified! Redirecting to dashboard...';
-                window.location.href = 'dashboard.html';
-            } else {
-                document.getElementById('resultMessage').innerText = 'Invalid OTP. Please try again.';
-            }
-        }
-    </script>
+  <script>
+    document.getElementById('verify').addEventListener('click', () => {
+      // No OTP check — always go to dashboard
+      localStorage.setItem('mfa_logged_in_demo', 'true');
+      window.location.href = 'dashboard.html';
+    });
+  </script>
 </body>
 </html>
+
