@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>MFA Demo — Login</title>
+  <style>body{font-family:Arial;padding:24px;max-width:500px;margin:auto}input,button{padding:10px;margin:6px 0;width:100%}#msg{margin-top:12px}</style>
+</head>
+<body>
+  <h1>MFA Demo — Login</h1>
+  <p>Enter the OTP generated on the Send page.</p>
+
+  <label>OTP</label>
+  <input id="otp" placeholder="Enter OTP" />
+
+  <button id="verify">Verify & Login</button>
+  <div id="msg"></div>
+
+  <script>
+    document.getElementById('verify').addEventListener('click', ()=>{
+      const entered = (document.getElementById('otp').value || '').trim();
+      const stored = sessionStorage.getItem('mfa_otp_demo');
+      if (!stored) {
+        document.getElementById('msg').innerText = 'No OTP found. Please generate OTP from the Send page.';
+        return;
+      }
+      if (entered === stored) {
+        sessionStorage.removeItem('mfa_otp_demo'); // invalidate
+        // set a small flag to allow dashboard access
+        sessionStorage.setItem('mfa_logged_in_demo','true');
+        window.location.href = 'dashboard.html';
+      } else {
+        document.getElementById('msg').innerText = 'Invalid OTP — try again.';
+      }
+    });
+  </script>
+</body>
+</html>
