@@ -41,10 +41,11 @@
             background-color: #0f4c75;
         }
         #otpMessage {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #0f4c75;
+            margin-top: 20px;
+            font-size: 28px; /* Bigger size */
             font-weight: bold;
+            color: #0f4c75;
+            letter-spacing: 2px; /* Spacing between digits */
         }
         .bank-logo {
             width: 60px;
@@ -66,11 +67,8 @@
         function sendOTP() {
             const otp = Math.floor(100000 + Math.random() * 900000);
             localStorage.setItem('otp', otp);
-            document.getElementById("otpMessage").innerText =
-                `✅ OTP Sent: ${otp} (For demo purposes only)`;
+            document.getElementById("otpMessage").innerText = `OTP Sent: ${otp}`;
         }
     </script>
 </body>
 </html>
-
-
