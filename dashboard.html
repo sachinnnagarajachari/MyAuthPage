@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>MFA Demo — Dashboard</title>
+  <style>body{font-family:Arial;padding:24px;max-width:700px;margin:auto}</style>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <div id="content"></div>
+  <p><a href="index.html">Back to Send OTP</a> | <a href="login.html">Login Page</a></p>
+
+  <script>
+    const ok = sessionStorage.getItem('mfa_logged_in_demo') === 'true';
+    if (!ok) {
+      document.getElementById('content').innerHTML = '<strong>Access denied.</strong> You must login via OTP.';
+    } else {
+      // option: remove the flag so refresh won't remain logged in
+      sessionStorage.removeItem('mfa_logged_in_demo');
+      document.getElementById('content').innerHTML = '<p>✅ You have successfully logged in (demo).</p>';
+    }
+  </script>
+</body>
+</html>
